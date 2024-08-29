@@ -1,0 +1,70 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: argocd
+  finalizers:
+    # This finalizer is for demo purposes, in production remove apps using argocd CLI "argocd app delete workload --cascade"
+    # When you invoke argocd app delete with --cascade, the finalizer is added automatically.
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: 6.3.4
+    chart: loki
+    helm: 
+      values: |
+          loki:
+            auth_enabled: false
+            storage:
+              bucketNames:
+                chunks: chunks
+                ruler: ruler
+                admin: admin
+              type: s3
+              s3:
+                endpoint: s3.ap-southeast-1.amazonaws.com
+                region: ap-southeast-1
+                s3ForcePathStyle: false
+                insecure: false
+            storage_config:
+              aws:
+                s3: s3://ap-southeast-1
+                bucketnames: <bucketname>
+            limits_config:
+              retention_period: 744h
+
+            schemaConfig:
+              configs:
+                - from: 2020-07-01
+                  store: tsdb
+                  object_store: s3
+                  schema: v13
+                  index:
+                    prefix: index_
+                    period: 24h
+          write:
+            persistence:
+              size: 50Gi
+              storageClass: efs-sc
+          read:
+            persistence:
+              size: 50Gi
+              storageClass: efs-sc
+          backend:
+            persistence:
+              size: 50Gi
+              storageClass: efs-sc
+          
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prometheus
+  syncPolicy:
+    automated:
+      allowEmpty: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+    retry:
+      limit: 60

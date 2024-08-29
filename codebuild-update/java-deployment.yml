@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bingo-java
+  namespace: bingo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bingo-java
+  template:
+    metadata:
+      labels:
+        app: bingo-java
+      annotations:
+        instrumentation.opentelemetry.io/inject-nodejs: 'false'
+        instrumentation.opentelemetry.io/inject-java: "opentelemetry-operator-system/java-instrumentation"
+        sidecar.opentelemetry.io/inject: 'true'
+    spec:
+      containers:
+      - name: bingo-java
+        image: public.ecr.aws/w0o4v2c1/yk-ecr-images:latest
+        ports:
+        - containerPort: 9090
+        volumeMounts:
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1"
+          requests:
+            memory: "1Gi"
+            cpu: "1"
+        env:
+        - name: TZ
+          value: "Asia/Singapore" # Change this to your desired timezone

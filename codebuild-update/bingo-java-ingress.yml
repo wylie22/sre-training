@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: bingo
+  name: bingo-java-ingress
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    #alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:432947219884:certificate/9ea3dd99-c2d0-46c6-b655-e1bfe7ff25b7
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: bingo-java-service
+              port:
+                number: 80
