@@ -6,10 +6,10 @@
 #  }
 #
 #  backend "s3" {
-#    bucket  = "tf-bucket-test"
-#    region  = "us-east-2"
-#    key     = "global/state/test-nigga/terraform.tfstate"  ###path in the s3 bucket
-#    profile = "cg-qat"
+#    bucket  = "wylie-tfstate-bucket"
+#    region  = "ap-southeast-1"
+#    key     = "global/state/wylie22/terraform.tfstate"  ###path in the s3 bucket
+#    profile = "playground"
 #  }
 #}
 resource "aws_iam_role" "codebuild_role" {

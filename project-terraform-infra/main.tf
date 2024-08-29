@@ -32,7 +32,7 @@ provider "kubernetes" {
 }
 
 locals {
-  name   = "Bingo-QAT-new"
+  name   = "Bingo-QAT-wylie"
   region = var.region
 
   cluster_version = var.kubernetes_version
@@ -203,7 +203,7 @@ module "eks" {
   subnet_ids = module.vpc.private_subnets
 
   eks_managed_node_groups = {
-    Bingo-QAT-new = {
+    Bingo-QAT-wylie = {
       instance_types = ["m6g.xlarge"]
       ami_type       = "AL2_ARM_64"
       user_data = "${file("init_ssm.sh")}"

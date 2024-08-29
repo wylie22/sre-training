@@ -1,7 +1,7 @@
-variable "AWS_PROFILE" {
-  description = "AWS profile name"
-  type        = string
-}
+#variable "AWS_PROFILE" {
+  #description = "AWS profile name"
+  #type        = string
+#}
 
 variable "AWS_REGION" {
   description = "AWS region"
@@ -33,10 +33,10 @@ variable "SOURCE_REPOSITORY_ID" {
   type        = string
 }
 
-#variable "SOURCE_FILE_PATH" {
-#  description = "path inside your tf code for pipeline trigger"
-#  type        = string
-#}
+variable "SOURCE_FILE_PATH" {
+  description = "path inside your tf code for pipeline trigger"
+  type        = string
+}
 
 variable "BUILD_PROJECT_NAME" {
   description = "Name of the CodeBuild project for the build stage"

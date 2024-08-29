@@ -1,6 +1,6 @@
 provider "aws" {
   region  = var.AWS_REGION
-  profile = var.AWS_PROFILE  
+  #profile = var.AWS_PROFILE  
 }
 
 resource "aws_s3_bucket" "bucketname" {

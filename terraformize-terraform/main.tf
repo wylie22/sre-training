@@ -1,9 +1,9 @@
 terraform {
 
   backend "s3" {
-    profile = "<SSO Profile>"
-    bucket  = "<bucket name>"
-    region  = "<region>"
+    #profile = "playground"
+    bucket  = "wylie-tfstate-bucket"
+    region  = "ap-southeast-1"
     key     = "state/terraform.tfstate"  ###path in the s3 bucket
   }
 }
@@ -43,7 +43,7 @@ resource "aws_s3_bucket" "artifacts" {
 
 provider "aws" {
   region  = var.AWS_REGION
-  profile = var.AWS_PROFILE
+  #profile = var.AWS_PROFILE
 }
 
 ########### CREATE SNS TOPIC ###########
@@ -160,9 +160,9 @@ resource "aws_codepipeline" "example" {
         branches {
           includes = [var.SOURCE_BRANCH_NAME]
         }
-#       file_paths {
-#          includes = [var.SOURCE_FILE_PATH]
-#        }
+       file_paths {
+          includes = [var.SOURCE_FILE_PATH]
+        }
       }
     }
   }

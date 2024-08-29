@@ -2,7 +2,7 @@
 ################## TERRAFORM APPLY CODEBUILD #################
 ##############################################################
 resource "aws_codebuild_project" "tf_apply_codebuild" {
-  name        = "terraform-apply-codebuild"
+  name        = "wylie-terraform-apply-codebuild"
   description = "Codebuild to TF Apply"
 
   artifacts {
@@ -48,7 +48,7 @@ phases:
     commands:
       - echo "------------ Initializing Terraform... ------------"
       - ls -la
-      - cd livsports-qat-terraform-infra && ls -la
+      - cd project-terraform-infra && ls -la
       - terraform init
       - echo "------------ Applying Terraform... ------------"
       - terraform apply --auto-approve
